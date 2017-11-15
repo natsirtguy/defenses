@@ -1,10 +1,13 @@
 (source gnu)
 (source melpa)
 
-(package-file "TODO")
+(package-file "odds.el")
+
+(files "odds.el")
+
+(depends-on "w3m")
 
 (development
  (depends-on "f")
- (depends-on "ecukes")
  (depends-on "ert-runner")
- (depends-on "el-mock"))
+ (depends-on "cl"))
