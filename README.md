@@ -6,9 +6,6 @@ Find odds for defenses for fantasy football.
 
 Run the script.
 
-# Installation
-Put `flykey.el` somewhere in your `load-path`.
-
 # Built Using
 * [Cask](https://cask.readthedocs.io/en/latest/)
 * [ert-runner.el](https://github.com/rejeep/ert-runner.el)
