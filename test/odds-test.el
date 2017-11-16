@@ -70,7 +70,5 @@
 	      ("Watsons" "-6.5"))))
     (odds-results s1 s2)))
 
-
-
 (provide 'odds-test)
 ;;; odds-test.el ends here
