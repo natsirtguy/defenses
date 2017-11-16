@@ -6,34 +6,41 @@
 
 ;;; Code:
 
-;; Open a buffer with a brand new .flyk file.
-(ert-deftest flykey-open-flyk-test ()
-  ;; Since this will create files, work in a sandbox directory.
+(ert-deftest odd-open-websites-test ()
+  "Visit websites, rendering them."
   (with-sandbox
-   (kill-leftover-buffers
-    )))
+   (with-temp-buffer
+     ;; (w3m-retrieve address-538)
+     ;; (w3m-buffer)
+     )))
 
-;; Use helper macro kill-leftover-buffers.
-(ert-deftest kill-leftover-buffers-test ()
-  (with-temp-buffer
-    (let ((buflist (buffer-list)))
-      (kill-leftover-buffers
-       (get-buffer-create "someotherbuffer"))
-      (should (equal buflist (buffer-list))))))
+(ert-deftest odds-compare-test ()
+  "Compare defenses."
+  (let ((def1 '("Hobos" 20.5 23.25))
+	(def2 '("Watsons" 18.0 30.0)))
+    (should
+     (equal (odds-compare def1 def2) def2))))
 
-;; Kill various flykey buffers.
-(ert-deftest flykey-kill-buffer-test ()
-  (with-flykey-running
-   (kill-buffer flykey-flybuf))
-  (with-flykey-running
-   (kill-buffer flykey-insertbuf))
-  (with-flykey-running
-   (kill-buffer)))
+(ert-deftest odds-teams-test ()
+  "Process defenses."
+  (let ((s1 '(("Hobos" "44" nil)
+	      ("Watsons" nil "-7")
+	      ("Rogers" nil "PK")
+	      ("Cant" "50" nil)))
+	(s2 '(("Cant" nil)
+	      ("Rogers" "-1")
+	      ("Hobos" nil)
+	      ("Watsons" "-6.5"))))
+    ))
 
-;; Use FlyKey with a file in fundamental mode (no keymap).
-(ert-deftest flykey-fundamental-mode-test ()
-  (with-sandbox
-   (kill-leftover-buffers)))
+(ert-deftest odds-winner-test ()
+  "Compare defenses."
+  (let ((team1 '("Hobos" "44" nil))
+	(team2 '("Watsons" nil "-7"))
+	(team3 '("Rogers" nil "PK"))
+	(team4 '("Cant" "50" nil)))
+    (should (equal (odds-winner team1 team2) team2))
+    (should (equal (odds-winner team3 team4) team3))))
 
 (provide 'odds-test)
 ;;; odds-test.el ends here
