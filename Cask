@@ -1,9 +1,9 @@
 (source gnu)
 (source melpa)
 
-(package-file "odds.el")
+(package-file "defenses.el")
 
-(files "odds.el")
+(files "defenses.el")
 
 (depends-on "w3m")
 

@@ -1,4 +1,4 @@
-;;; odds.el --- Find the best defense for fantasy football using 538 and Vegas.
+;;; defenses.el --- Find the best defense for fantasy football using 538 and Vegas.
 
 ;; Copyright (C) 2017 Tristan McKinney
 
@@ -23,12 +23,12 @@
   "https://projects.fivethirtyeight.com/2017-nfl-predictions/games/"
   "The 538 NFL website.")
 
-(defun odds ()
+(defun defenses ()
   "Show the best defenses."
   (interactive)
-  (odds-results (odds-parse-vegas) (odds-parse-538)))
+  (defenses-results (defenses-parse-vegas) (defenses-parse-538)))
 
-(defun odds-parse-vegas ()
+(defun defenses-parse-vegas ()
   "Return list with elements (team ou? spread?) by parsing `web-vegas'."
   (let* ((teamname "\\([A-Z][A-OQ-Za-z\\. ]*\\)")
 	 (open "\\(?:-?[0-9][0-9]?\\.?5?\\|PK\\)\\(?:u\\| \\)\\(?:+\\|-\\)[0-9][0-9]? *")
@@ -50,7 +50,7 @@
 	    (setq teams (cons (list (string-trim team) ou spread) teams))))
 	teams))))
 
-(defun odds-parse-538 ()
+(defun defenses-parse-538 ()
   "Return list with elements (team spread?) by parsing `web-538'."
   (let* ((teamname "\\([A-Z][A-OQ-Za-z\\. ]*\\)")
 	 (c-spread "\\(-[0-9][0-9]?\\.?5?\\|PK\\)?")
@@ -67,12 +67,12 @@
 	    (setq teams (cons (list (string-trim team) spread) teams))))
 	teams))))
 
-(defun odds-results (s1 s2)
+(defun defenses-results (s1 s2)
   "Display buffer with best defenses, sorted, given S1 from Vegas and S2 from 538."
   (with-output-to-temp-buffer "*defenses*"
     (princ "Team                 Vegas         538\n")
     (princ "----------------------------------------\n")
-    (dolist (defense (sort (odds-teams s1 s2) 'odds-compare))
+    (dolist (defense (sort (defenses-teams s1 s2) 'defenses-compare))
       (princ (concat
 	      (format "%-20s %-13.2f %.2f"
 			     (car defense)
@@ -80,21 +80,21 @@
 			     (cadr (cdr defense)))
 	      "\n")))))
 
-(defun odds-compare (d1 d2)
+(defun defenses-compare (d1 d2)
   "Return t if D1 is better than D2 according to Vegas."
   (if (< (cadr d1) (cadr d2)) t nil))
 
-(defun odds-teams (s1 s2)
+(defun defenses-teams (s1 s2)
   "Return list with elements (name score-vegas score-538) from Vegas in S1 and 538 in S2."
   (let (defenses)
     (while (cdr s1)
       (let* ((team1 (pop s1))
 	     (team2 (pop s1))
-	     (winner (odds-winner team1 team2))
-	     (loser (odds-loser team1 team2))
+	     (winner (defenses-winner team1 team2))
+	     (loser (defenses-loser team1 team2))
 	     (ou (string-to-number (cadr loser)))
 	     (spread (string-to-number (cadr (cdr winner))))
-	     (spread-538 (odds-spread-538 winner loser s2)))
+	     (spread-538 (defenses-spread-538 winner loser s2)))
 	(setq defenses
 	      (cons (list (car winner)
 		     (/ (+ ou spread) 2.0)
@@ -102,7 +102,7 @@
 		    defenses))))
     defenses))
 
-(defun odds-spread-538 (winner loser s2)
+(defun defenses-spread-538 (winner loser s2)
   "Return spread from 538 given Vegas WINNER and LOSER, and parsed list of teams S2."
   (let (spread)
     (dolist (team s2 spread)
@@ -111,17 +111,17 @@
       (if (and (cadr team) (string= (car team) (car loser)))
 	  (setq spread (- (string-to-number (cadr team))))))))
 
-(defun odds-winner (team1 team2)
+(defun defenses-winner (team1 team2)
   "Return TEAM1 if Vegas thinks they will win, TEAM2 otherwise."
   (if (cadr (cdr team1))		;Only the winning team has a spread.
       team1
     team2))
 
-(defun odds-loser (team1 team2)
+(defun defenses-loser (team1 team2)
   "Return TEAM1 if Vegas thinks they will lose, TEAM2 otherwise."
   (if (cadr (cdr team1))		;Only the winning team has a spread.
       team2
     team1))
 
-(provide 'odds)
-;;; odds.el ends here
+(provide 'defenses)
+;;; defenses.el ends here
