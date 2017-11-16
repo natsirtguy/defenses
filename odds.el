@@ -69,12 +69,12 @@
 
 (defun odds-results (s1 s2)
   "Display buffer with best defenses, sorted, given S1 from Vegas and S2 from 538."
-  (with-output-to-temp-buffer "*scores*"
-    (princ "Team            Vegas         538\n")
-    (princ "-----------------------------------\n")
+  (with-output-to-temp-buffer "*defenses*"
+    (princ "Team                 Vegas         538\n")
+    (princ "----------------------------------------\n")
     (dolist (defense (sort (odds-teams s1 s2) 'odds-compare))
       (princ (concat
-	      (format "%-15s %-13.2f %.2f"
+	      (format "%-20s %-13.2f %.2f"
 			     (car defense)
 			     (cadr defense)
 			     (cadr (cdr defense)))
