@@ -58,5 +58,19 @@
     (should (= (odds-spread-538 winner1 loser1 s2) -6.5))
     (should (= (odds-spread-538 winner2 loser2 s2) 1))))
 
+(ert-deftest odds-results-test ()
+  "Display results."
+  (let ((s1 '(("Hobos" "44" nil)
+	      ("Watsons" nil "-7")
+	      ("Rogers" nil "PK")
+	      ("Cant" "50" nil)))
+	(s2 '(("Cant" "-1")
+	      ("Rogers" nil)
+	      ("Hobos" nil)
+	      ("Watsons" "-6.5"))))
+    (odds-results s1 s2)))
+
+
+
 (provide 'odds-test)
 ;;; odds-test.el ends here

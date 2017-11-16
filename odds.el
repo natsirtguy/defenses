@@ -26,7 +26,15 @@
 (defun odds-results (s1 s2)
   "Display buffer with best defenses, sorted, given S1 from Vegas and S2 from 538."
   (with-output-to-temp-buffer "*scores*"
-    (dolist (defense (sort (odds-teams s1 s2) 'odds-compare)))))
+    (princ "Team            Vegas         538\n")
+    (princ "-----------------------------------\n")
+    (dolist (defense (sort (odds-teams s1 s2) 'odds-compare))
+      (princ (concat
+	      (format "%-15s %-13.2f %.2f"
+			     (car defense)
+			     (cadr defense)
+			     (cadr (cdr defense)))
+	      "\n")))))
 
 (defun odds-compare (d1 d2)
   "Return the better defense of D1 and D2 according to Vegas."
