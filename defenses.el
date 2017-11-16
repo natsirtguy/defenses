@@ -5,8 +5,8 @@
 ;; Author: Tristan McKinney <natsirtguy@gmail.com>
 ;; Maintainer: Tristan McKinney <natsirtguy@gmail.com>
 ;; Version: 0.1.0
-;; Keywords: convenience
-;; URL:
+;; Keywords: games
+;; URL: https://github.com/natsirtguy/defenses
 ;; Package-Requires: ((w3m "20171019.1734"))
 
 ;;; Commentary:
