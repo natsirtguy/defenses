@@ -19,7 +19,7 @@
   (let ((def1 '("Hobos" 20.5 23.25))
 	(def2 '("Watsons" 18.0 30.0)))
     (should
-     (equal (odds-compare def1 def2) def2))))
+     (equal (odds-compare def1 def2) nil))))
 
 (ert-deftest odds-teams-test ()
   "Process defenses."

@@ -23,7 +23,7 @@
   "https://projects.fivethirtyeight.com/2017-nfl-predictions/games/"
   "The 538 NFL website.")
 
-(defun odds-show-defenses ()
+(defun odds ()
   "Show the best defenses."
   (interactive)
   (odds-results (odds-parse-vegas) (odds-parse-538)))
