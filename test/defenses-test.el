@@ -26,7 +26,10 @@
     (should
      (equal
       (defenses-teams s1 s2)
-      '(("Rogers" 25.0 25.5) ("Watsons" 18.5 18.75))))))
+      '(("Rogers" 25.0 25.5)
+	("Cant" 25.0 24.5)
+	("Watsons" 18.5 18.75)
+	("Hobos" 25.5 25.25))))))
 
 (ert-deftest defenses-winner-test ()
   "Compare defenses."

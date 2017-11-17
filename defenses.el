@@ -99,7 +99,10 @@
 	      (cons (list (car winner)
 		     (/ (+ ou spread) 2.0)
 		     (/ (+ ou spread-538) 2.0))
-		    defenses))))
+		    (cons (list (car loser)
+				(/ (- ou spread) 2.0)
+				(/ (- ou spread-538) 2.0))
+			  defenses)))))
     defenses))
 
 (defun defenses-spread-538 (winner loser s2)
