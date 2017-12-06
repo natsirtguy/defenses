@@ -31,7 +31,7 @@
 (defun defenses-parse-vegas ()
   "Return list with elements (team ou? spread?) by parsing `web-vegas'."
   (let* ((teamname "\\([A-Z][A-OQ-Za-z\\. ]*\\)")
-	 (open "\\(?:-?[0-9][0-9]?\\.?5?\\|PK\\)\\(?:u\\| \\)\\(?:+\\|-\\)[0-9][0-9]? *")
+	 (open "\\(?:-?[0-9][0-9]?\\.?5?\\|PK\\)\\(?:u\\| \\)\\(?:+\\|-\\|EV\\)[0-9]?[0-9]? *")
 	 (c-spread "\\(-[0-9][0-9]?\\.?5?\\|PK\\)?")
 	 (c-ou "\\([0-9][0-9]\\.?5?\\)?")
 	 (pattern (concat "[0-9]\\{3\\} " teamname open c-spread c-ou)))
