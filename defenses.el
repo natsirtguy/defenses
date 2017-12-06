@@ -75,33 +75,53 @@
     (dolist (defense (sort (defenses-teams s1 s2) 'defenses-compare))
       (princ (concat
 	      (format "%-20s %-13.2f %.2f"
-			     (car defense)
-			     (cadr defense)
-			     (cadr (cdr defense)))
+		      (car defense)
+		      (if (cadr defense)
+			  (cadr defense)
+			0)
+		      (if (cadr (cdr defense))
+			  (cadr (cdr defense))
+			0))
 	      "\n")))))
 
 (defun defenses-compare (d1 d2)
   "Return t if D1 is better than D2 according to Vegas."
-  (if (< (cadr d1) (cadr d2)) t nil))
+  (if (and (cadr d1) (cadr d2)) 	;Check if non-nil
+      (if (< (cadr d1) (cadr d2)) t nil)
+    (if (cadr d1) t nil)))
 
 (defun defenses-teams (s1 s2)
-  "Return list with elements (name score-vegas score-538) from Vegas in S1 and 538 in S2."
+  "Return list with elements (name score-vegas score-538) from Vegas in S1 and 538 in S2; values are nil if info is missing."
   (let (defenses)
     (while (cdr s1)
       (let* ((team1 (pop s1))
 	     (team2 (pop s1))
 	     (winner (defenses-winner team1 team2))
 	     (loser (defenses-loser team1 team2))
-	     (ou (string-to-number (cadr loser)))
-	     (spread (string-to-number (cadr (cdr winner))))
+	     (ou
+	      (if (cadr loser)
+		  (string-to-number (cadr loser))
+		nil))
+	     (spread
+	      (if (cadr (cdr winner))
+		  (string-to-number (cadr (cdr winner)))
+		nil))
 	     (spread-538 (defenses-spread-538 winner loser s2)))
 	(setq defenses
 	      (cons (list (car winner)
-		     (/ (+ ou spread) 2.0)
-		     (/ (+ ou spread-538) 2.0))
+			  (if (and ou spread)
+			      (/ (+ ou spread) 2.0)
+			    nil)
+			  (if (and ou spread-538)
+			      (/ (+ ou spread-538) 2.0)
+			    nil))
 		    (cons (list (car loser)
-				(/ (- ou spread) 2.0)
-				(/ (- ou spread-538) 2.0))
+				(if (and ou spread)
+				    (/ (- ou spread) 2.0)
+				  nil)
+				(if (and ou spread-538)
+				    (/ (- ou spread-538) 2.0)
+				  nil))
 			  defenses)))))
     defenses))
 
@@ -110,9 +130,15 @@
   (let (spread)
     (dolist (team s2 spread)
       (if (and (cadr team) (string= (car team) (car winner)))
-	  (setq spread (string-to-number (cadr team))))
+	  (setq spread
+		(if (cadr team)
+		    (string-to-number (cadr team))
+		  nil)))
       (if (and (cadr team) (string= (car team) (car loser)))
-	  (setq spread (- (string-to-number (cadr team))))))))
+	  (setq spread
+		(if (cadr team)
+		    (- (string-to-number (cadr team)))
+		  nil))))))
 
 (defun defenses-winner (team1 team2)
   "Return TEAM1 if Vegas thinks they will win, TEAM2 otherwise."
