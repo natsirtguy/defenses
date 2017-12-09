@@ -59,13 +59,13 @@
       (setq case-fold-search nil)
       (w3m-retrieve web-538)
       (w3m-buffer)
-      (re-search-forward "Week [0-9][0-9]?")
+      (re-search-forward "Week [0-9][0-9]?\n")
       (let (teams)
 	(while (re-search-forward pattern nil t)
 	  (let* ((team (match-string-no-properties 1))
 		 (spread (match-string-no-properties 2)))
 	    (setq teams (cons (list (string-trim team) spread) teams))))
-	teams))))
+	(reverse teams)))))
 
 (defun defenses-results (s1 s2)
   "Display buffer with best defenses, sorted, given S1 from Vegas and S2 from 538."
