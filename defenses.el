@@ -65,7 +65,7 @@
 	  (let* ((team (match-string-no-properties 1))
 		 (spread (match-string-no-properties 2)))
 	    (setq teams (cons (list (string-trim team) spread) teams))))
-	(reverse teams)))))
+	teams))))
 
 (defun defenses-results (s1 s2)
   "Display buffer with best defenses, sorted, given S1 from Vegas and S2 from 538."
